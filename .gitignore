@@ -4,3 +4,6 @@
 /TicTacToe.Core/obj
 /TicTacToe/bin
 /TicTacToe/obj
+/TicTacToe.Tests/obj
+/TicTacToe.Tests/bin
+/*.user

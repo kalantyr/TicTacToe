@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="TicTacToe.UserControls.FieldControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Background="#01808080" Cursor="Arrow">
     <Grid>
         <TextBlock x:Name="_tbCross" Text="X" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="_tbZero" Text="O" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>

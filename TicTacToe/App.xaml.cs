@@ -1,5 +1,6 @@
 ﻿using System;
 using TicTacToe.Core;
+using TicTacToe.Core.Impl;
 
 namespace TicTacToe
 {
@@ -15,10 +16,18 @@ namespace TicTacToe
         /// </summary>
         internal event Action<Game, Game> GameChanged;
 
+        /// <summary>
+        /// Искуственный интеллект
+        /// </summary>
+        public IPlayer ComputerPlayer { get; } = new ComputerPlayer();
+
+        /// <summary>
+        /// Начинает новую игру
+        /// </summary>
         internal void NewGame()
         {
             var oldGame = CurrentGame;
-            CurrentGame = new Game();
+            CurrentGame = new Game(new WinDetector());
             GameChanged?.Invoke(oldGame, CurrentGame);
         }
     }

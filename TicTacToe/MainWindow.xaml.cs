@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using TicTacToe.Core;
 
 namespace TicTacToe
@@ -17,7 +18,18 @@ namespace TicTacToe
 
         private void OnFieldSelected(byte x, byte y)
         {
-            ((App)Application.Current).CurrentGame.MakeMove(Player.Human, x, y);
+            var game = ((App)Application.Current).CurrentGame;
+
+            // ход Человека
+            game.MakeMove(Player.Human, x, y);
+
+            // ход Компьютера
+            if (!game.IsGameOver)
+            {
+                var computer = ((App)Application.Current).ComputerPlayer;
+                var (x2, y2) = computer.NextMove(game);
+                game.MakeMove(Player.Computer, x2, y2);
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -25,9 +37,25 @@ namespace TicTacToe
             ((App)Application.Current).NewGame();
         }
 
-        private void OnGameChanged(Core.Game oldGame, Core.Game newGame)
+        private void OnGameChanged(Game oldGame, Game newGame)
         {
+            if (oldGame != null)
+                oldGame.End -= NewGame_End;
+
             _gameControl.Game = newGame;
+
+            if (newGame != null)
+                newGame.End += NewGame_End;
+        }
+
+        private void NewGame_End(Player? winner)
+        {
+            var text = "Игра завершена.";
+            if (winner == Player.Computer)
+                text += Environment.NewLine + Environment.NewLine + "Победил компьютер.";
+            if (winner == Player.Human)
+                text += Environment.NewLine + Environment.NewLine + "Поздравляем, Вы победили!";
+            MessageBox.Show(this, text, Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)
