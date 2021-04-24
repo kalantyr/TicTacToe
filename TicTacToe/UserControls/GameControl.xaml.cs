@@ -53,10 +53,11 @@ namespace TicTacToe.UserControls
                 return;
 
             var mousePos = e.GetPosition(this);
+
             var x = mousePos.X / ActualWidth;
             var y = mousePos.Y / ActualHeight;
-            var xb = (byte)(Game.Width * x);
-            var yb = (byte)(Game.Height * y);
+            var xb = (byte)(Game.Size * x);
+            var yb = (byte)(Game.Size * y);
             FieldSelected.Invoke(xb, yb);
         }
     }

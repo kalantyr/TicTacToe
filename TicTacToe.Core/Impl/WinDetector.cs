@@ -33,20 +33,20 @@ namespace TicTacToe.Core.Impl
         
         private Player? GetHorizontalWinner(IGameInfo game)
         {
-            for (var y = 0; y<3; y++)
+            for (var y = 0; y < game.Size; y++)
             {
                 var crossCount = 0;
                 var zeroCount = 0;
-                for (var x = 0; x<3; x++)
+                for (var x = 0; x < game.Size; x++)
                 {
                     if (game.CurrentState[x, y] == State.Cross)
                         crossCount++;
                     if (game.CurrentState[x, y] == State.Zero)
                         zeroCount++;
                 }
-                if (crossCount == 3)
+                if (crossCount == game.Size)
                     return Player.Human;                
-                if (zeroCount == 3)
+                if (zeroCount == game.Size)
                     return Player.Computer;
             }
             return null;
