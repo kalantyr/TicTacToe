@@ -7,16 +7,6 @@ namespace TicTacToe.Core
     {
         private readonly IWinDetector _winDetector;
 
-        /// <summary>
-        /// Ширина игрового поля
-        /// </summary>
-        public const byte Width = 3;
-
-        /// <summary>
-        /// Высота игрового поля
-        /// </summary>
-        public const byte Height = 3;
-
         private readonly IList<GameMove> _gameMoves = new List<GameMove>();
 
         /// <inheritdoc/>
@@ -24,12 +14,15 @@ namespace TicTacToe.Core
         {
             get
             {
-                var currentState = new State?[Width, Height];
+                var currentState = new State?[Size, Size];
                 foreach (var move in _gameMoves)
                     currentState[move.X, move.Y] = move.State;
                 return currentState;
             }
         }
+
+        /// <inheritdoc/>
+        public byte Size { get; } = 3;
 
         /// <summary>
         /// Событие случается, когда сделан ход
@@ -58,9 +51,9 @@ namespace TicTacToe.Core
         /// <param name="y">Позиция по вертикали [0..<see cref="Height"/>]</param>
         public void MakeMove(Player player, byte x,  byte y)
         {
-            if (x >= Width)
+            if (x >= Size)
                 throw new ArgumentOutOfRangeException(nameof(x));
-            if (y >= Height)
+            if (y >= Size)
                 throw new ArgumentOutOfRangeException(nameof(y));
 
             if (IsGameOver)
@@ -85,7 +78,7 @@ namespace TicTacToe.Core
             }
 
             // Если всё поле закончилось
-            if (_gameMoves.Count == Width * Height)
+            if (_gameMoves.Count == Size * Size)
             {
                 IsGameOver = true;
                 End?.Invoke(null);

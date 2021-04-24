@@ -1,16 +1,47 @@
 ﻿<UserControl x:Class="TicTacToe.UserControls.GameControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="150" Height="150">
-    <Grid x:Name="_grid" Cursor="Hand" Background="#10000000" MouseLeftButtonDown="OnMouseLeftButtonDown">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+    <UserControl.Resources>
+        <Style x:Key="rect" TargetType="Rectangle">
+            <Setter Property="Fill" Value="#FFFFFFFF"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="#10000000" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle Style="{StaticResource rect}"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Column="1"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Column="2"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Row="1"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Row="1" Grid.Column="1"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Row="1" Grid.Column="2"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Row="2"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Row="2" Grid.Column="1"/>
+            <Rectangle Style="{StaticResource rect}" Grid.Row="2" Grid.Column="2"/>
+        </Grid>
+
+        <Grid x:Name="_grid" Cursor="Hand" Background="#01808080" MouseLeftButtonDown="OnMouseLeftButtonDown">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        </Grid>
     </Grid>
 </UserControl>
