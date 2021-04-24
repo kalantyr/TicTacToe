@@ -1,0 +1,6 @@
+/.vs/TicTacToe/v16/*.suo
+/.vs
+/TicTacToe.Core/bin
+/TicTacToe.Core/obj
+/TicTacToe/bin
+/TicTacToe/obj
