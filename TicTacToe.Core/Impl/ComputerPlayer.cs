@@ -12,6 +12,10 @@ namespace TicTacToe.Core.Impl
 
             // TODO: тут нужно решить, куда компьютеру поставить "нолик"
 
+            var xy = GetHorizontalLastMove(game);
+            if (xy != null)
+                return xy.Value;
+
             // этот алгоритм выдаёт случайную пустую клетку
             do
             {
@@ -22,6 +26,29 @@ namespace TicTacToe.Core.Impl
             } while (true);
 
             //return (x, y);
+        }
+        public (byte, byte)? GetHorizontalLastMove(IGameInfo game)
+        {
+            for (byte y = 0; y < game.Size; y++)
+            {
+                var zeroCount = 0;
+                var nullCount = 0;
+                byte nullX = 0;
+                for (byte x = 0; x < game.Size; x++)
+                {
+                    if (game.CurrentState[x, y] == null)
+                    {
+                        nullCount++;
+                        nullX = x;
+                    }
+                    if (game.CurrentState[x, y] == State.Zero)
+                        zeroCount++;
+                }
+                if (zeroCount == game.Size - 1)
+                    if (nullCount > 0)
+                        return (nullX, y);
+            }
+            return null;
         }
     }
 }

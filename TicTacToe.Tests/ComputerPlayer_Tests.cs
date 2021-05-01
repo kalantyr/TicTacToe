@@ -8,11 +8,12 @@ namespace TicTacToe.Tests
     public class ComputerPlayer_Tests
     {
         [Test]
-        public void NextMove_Test()
+        public void GetHorizontalLastMove_Test()
         {
             var state = new State?[3, 3];
-            state[0, 0] = State.Cross;
-            state[0, 1] = State.Zero;
+            state[0, 0] = State.Zero;
+            state[1, 0] = null;
+            state[2, 0] = State.Zero;
 
             var game = new Mock<IGameInfo>();
             game.Setup(g => g.Size).Returns(3);
@@ -20,7 +21,7 @@ namespace TicTacToe.Tests
 
             var computerPlayer = new ComputerPlayer();
             var (x, y) = computerPlayer.NextMove(game.Object);
-            Assert.AreEqual(0, x);
+            Assert.AreEqual(1, x);
             Assert.AreEqual(0, y);
         }
     }
