@@ -69,6 +69,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
@@ -86,6 +87,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
@@ -103,6 +105,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
@@ -120,6 +123,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
@@ -136,6 +140,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
@@ -154,6 +159,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
@@ -171,6 +177,7 @@ namespace TicTacToe.Tests
 
 
             var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
             var winDetector = new WinDetector();
