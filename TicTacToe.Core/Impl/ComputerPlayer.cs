@@ -4,9 +4,15 @@ namespace TicTacToe.Core.Impl
 {
     public class ComputerPlayer: IPlayer
     {
+        private readonly IWinDetector _winDetector;
         private readonly Random _rand = new Random();
 
-        public (byte, byte) NextMove(IGameInfo game)
+        public ComputerPlayer(IWinDetector winDetector)
+        {
+            _winDetector = winDetector ?? throw new ArgumentNullException(nameof(winDetector));
+        }
+
+        public (byte, byte) NextMove(IGame game)
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
 

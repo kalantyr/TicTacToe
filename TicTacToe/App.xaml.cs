@@ -6,20 +6,33 @@ namespace TicTacToe
 {
     public partial class App
     {
+        private readonly WinDetector _winDetector = new WinDetector();
+        private readonly ComputerPlayer _computerPlayer;
+
+        public App()
+        {
+            _computerPlayer = new ComputerPlayer(_winDetector);
+        }
+
         /// <summary>
         /// Текущая игра
         /// </summary>
-        internal Game CurrentGame { get; private set; }
+        internal IGame CurrentGame { get; private set; }
 
         /// <summary>
         /// Случается, когда старая игра прекращается и начинается новая
         /// </summary>
-        internal event Action<Game, Game> GameChanged;
+        internal event Action<IGame, IGame> GameChanged;
+
+        /// <summary>
+        /// Определитель победы
+        /// </summary>
+        public IWinDetector WinDetector => _winDetector;
 
         /// <summary>
         /// Искуственный интеллект
         /// </summary>
-        public IPlayer ComputerPlayer { get; } = new ComputerPlayer();
+        public IPlayer ComputerPlayer => _computerPlayer;
 
         /// <summary>
         /// Начинает новую игру
@@ -27,7 +40,7 @@ namespace TicTacToe
         internal void NewGame()
         {
             var oldGame = CurrentGame;
-            CurrentGame = new Game(new WinDetector());
+            CurrentGame = new Game();
             GameChanged?.Invoke(oldGame, CurrentGame);
         }
     }

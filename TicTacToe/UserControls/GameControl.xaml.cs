@@ -7,14 +7,14 @@ namespace TicTacToe.UserControls
 {
     public partial class GameControl
     {
-        private Game _game;
+        private IGame _game;
 
         /// <summary>
         /// Когда кликнули мышкой на игровое поле
         /// </summary>
         public event Action<byte, byte> FieldSelected;
 
-        public Game Game
+        public IGame Game
         {
             get => _game;
             set

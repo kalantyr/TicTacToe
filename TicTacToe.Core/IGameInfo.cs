@@ -14,10 +14,5 @@
         /// Размер игровоо поля (по ширине и высоте)
         /// </summary>
         byte Size { get; }
-
-        /// <summary>
-        /// Игра завершена
-        /// </summary>
-        public bool IsGameOver { get; }
     }
 }

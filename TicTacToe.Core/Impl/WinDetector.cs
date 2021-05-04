@@ -96,11 +96,11 @@ namespace TicTacToe.Core.Impl
         
         private Player? GetDiagonalWinner2(IGameInfo game)
         {
-                var crossCount = 0;
-                var zeroCount = 0;
-            for (var x = 2; x > -1; x--)
+            var crossCount = 0;
+            var zeroCount = 0;
+            for (var x = game.Size - 1; x > -1; x--)
             {
-                var y = 2 - x;
+                var y = game.Size - 1 - x;
                 if (game.CurrentState[x, y] == State.Cross)
                 {
                     crossCount++;

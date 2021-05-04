@@ -5,6 +5,6 @@
         /// <summary>
         /// Возвращает (x, y) следующего хода
         /// </summary>
-        (byte, byte) NextMove(IGameInfo game);
+        (byte, byte) NextMove(IGame game);
     }
 }
