@@ -3,11 +3,9 @@ using System.Collections.Generic;
 
 namespace TicTacToe.Core
 {
-    public class Game : IGameInfo
+    public class Game : IGame
     {
-        private readonly IWinDetector _winDetector;
-
-        private readonly IList<GameMove> _gameMoves = new List<GameMove>();
+        private readonly List<GameMove> _gameMoves = new List<GameMove>();
 
         /// <inheritdoc/>
         public State?[,] CurrentState
@@ -24,31 +22,31 @@ namespace TicTacToe.Core
         /// <inheritdoc/>
         public byte Size { get; } = 3;
 
-        /// <summary>
-        /// Событие случается, когда сделан ход
-        /// </summary>
+        /// <inheritdoc/>
         public event Action<GameMove> OnMove;
 
-        /// <summary>
-        /// Случается, когда игра завершена (передаётся победитель)
-        /// </summary>
+        /// <inheritdoc/>
         public event Action<Player?> End;
 
         /// <inheritdoc/>
         public bool IsGameOver { get; private set; }
 
-        public Game(IWinDetector winDetector)
+        /// <inheritdoc/>
+        public Player? Winner { get; private set; }
+
+        /// <inheritdoc/>
+        public IGame Clone()
         {
-            _winDetector = winDetector ?? throw new ArgumentNullException(nameof(winDetector));
+            var clone = new Game
+            {
+                IsGameOver = IsGameOver,
+                Winner = Winner
+            };
+            clone._gameMoves.AddRange(_gameMoves);
+            return clone;
         }
 
-        /// <summary>
-        /// Сделать ход
-        /// (Человек ставит крестики, компьютер - нолики)
-        /// </summary>
-        /// <param name="player">Кто делает ход</param>
-        /// <param name="x">Позиция по горизонтали [0..<see cref="Width"/>]</param>
-        /// <param name="y">Позиция по вертикали [0..<see cref="Height"/>]</param>
+        /// <inheritdoc/>
         public void MakeMove(Player player, byte x,  byte y)
         {
             if (x >= Size)
@@ -68,13 +66,17 @@ namespace TicTacToe.Core
             var gameMove = new GameMove(player, x, y, state);
             _gameMoves.Add(gameMove);
             OnMove?.Invoke(gameMove);
+        }
 
+        /// <inheritdoc/>
+        public void CheckWinner(IWinDetector winDetector)
+        {
             // если уже есть победитель
-            var winner = _winDetector.GetWinner(this);
-            if (winner != null)
+            Winner = winDetector.GetWinner(this);
+            if (Winner != null)
             {
                 IsGameOver = true;
-                End?.Invoke(winner);
+                End?.Invoke(Winner);
             }
 
             // Если всё поле закончилось

@@ -7,6 +7,8 @@ namespace TicTacToe.Tests
 {
     public class ComputerPlayer_Tests
     {
+        private readonly WinDetector _winDetector = new WinDetector();
+
         [Test]
         public void GetHorizontalLastMove_Test()
         {
@@ -86,11 +88,11 @@ namespace TicTacToe.Tests
             state[1, 1] = State.Zero;
             state[2, 2] = State.Zero;
 
-            var game = new Mock<IGameInfo>();
+            var game = new Mock<IGame>();
             game.Setup(g => g.Size).Returns(3);
             game.Setup(g => g.CurrentState).Returns(state);
 
-            var computerPlayer = new ComputerPlayer();
+            var computerPlayer = new ComputerPlayer(_winDetector);
             var (x, y) = computerPlayer.NextMove(game.Object);
             Assert.AreEqual(0, x);
             Assert.AreEqual(0, y);

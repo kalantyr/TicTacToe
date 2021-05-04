@@ -37,15 +37,30 @@ namespace TicTacToe
             ((App)Application.Current).NewGame();
         }
 
-        private void OnGameChanged(Game oldGame, Game newGame)
+        private void OnGameChanged(IGame oldGame, IGame newGame)
         {
             if (oldGame != null)
+            {
                 oldGame.End -= NewGame_End;
+                newGame.OnMove -= NewGame_OnMove;
+            }
 
             _gameControl.Game = newGame;
 
             if (newGame != null)
+            {
                 newGame.End += NewGame_End;
+                newGame.OnMove += NewGame_OnMove;
+            }
+        }
+
+        private void NewGame_OnMove(GameMove gameMove)
+        {
+            var game = ((App)Application.Current).CurrentGame;
+            var winDetector = ((App)Application.Current).WinDetector;
+
+            // проверяем, не появился ли победитель
+            game.CheckWinner(winDetector);
         }
 
         private void NewGame_End(Player? winner)
