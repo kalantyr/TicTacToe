@@ -15,10 +15,21 @@ namespace TicTacToe.Core.Impl
         public (byte, byte) NextMove(IGame game)
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
+            
+            for (byte x=0; x<game.Size; x++)
+            {
+                for (byte y=0; y<game.Size; y++)
+                {
+                    if (game.CurrentState[x, y] != null) continue;
+                    
+                    var clone = game.Clone();
+                    clone.MakeMove(Player.Computer, x, y);
+                    clone.CheckWinner(_winDetector);
+                    if (clone.Winner == Player.Computer)
+                        return (x, y);
+                }
+            }
 
-            // TODO: тут нужно решить, куда компьютеру поставить "нолик"
-
-            // этот алгоритм выдаёт случайную пустую клетку
             do
             {
                 var x = (byte)_rand.Next(0, 3);
@@ -26,8 +37,6 @@ namespace TicTacToe.Core.Impl
                 if (game.CurrentState[x, y] == null)
                     return (x, y);
             } while (true);
-
-            //return (x, y);
         }
     }
 }
