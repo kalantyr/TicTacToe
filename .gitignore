@@ -7,3 +7,4 @@
 /TicTacToe.Tests/obj
 /TicTacToe.Tests/bin
 /*.user
+*.coverage
