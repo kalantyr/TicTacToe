@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using TicTacToe.Core;
 
 namespace TicTacToe.UserControls
@@ -29,8 +31,43 @@ namespace TicTacToe.UserControls
 
                 _game = value;
 
+                _grdFields.Children.Clear();
+                _grdFields.RowDefinitions.Clear();
+                _grdFields.ColumnDefinitions.Clear();
+
+                _grid.RowDefinitions.Clear();
+                _grid.ColumnDefinitions.Clear();
+
                 if (_game != null)
+                {
+                    FillGrdFields();
+
+                    for (var y = 0; y < _game.Size; y++)
+                        _grid.RowDefinitions.Add(new RowDefinition());
+                    for (var x = 0; x < _game.Size; x++)
+                        _grid.ColumnDefinitions.Add(new ColumnDefinition());
+
                     _game.OnMove += OnMove;
+                }
+            }
+        }
+
+        private void FillGrdFields()
+        {
+            var style = (Style)FindResource("rect");
+
+            for (var y = 0; y < _game.Size; y++)
+                _grdFields.RowDefinitions.Add(new RowDefinition());
+            for (var x = 0; x < _game.Size; x++)
+                _grdFields.ColumnDefinitions.Add(new ColumnDefinition());
+
+            for (var y = 0; y < _game.Size; y++)
+            for (var x = 0; x < _game.Size; x++)
+            {
+                var rect = new Rectangle {Style = style};
+                Grid.SetRow(rect, y);
+                Grid.SetColumn(rect, x);
+                _grdFields.Children.Add(rect);
             }
         }
 

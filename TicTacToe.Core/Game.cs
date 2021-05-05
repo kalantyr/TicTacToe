@@ -5,6 +5,11 @@ namespace TicTacToe.Core
 {
     public class Game : IGame
     {
+        /// <summary>
+        /// Размер стороны по умолчанию
+        /// </summary>
+        public const byte DefaultSize = 3;
+
         private readonly List<GameMove> _gameMoves = new List<GameMove>();
 
         /// <inheritdoc/>
@@ -20,7 +25,7 @@ namespace TicTacToe.Core
         }
 
         /// <inheritdoc/>
-        public byte Size { get; } = 3;
+        public byte Size { get; }
 
         /// <inheritdoc/>
         public event Action<GameMove> OnMove;
@@ -34,10 +39,15 @@ namespace TicTacToe.Core
         /// <inheritdoc/>
         public Player? Winner { get; private set; }
 
+        public Game(byte size = DefaultSize)
+        {
+            Size = size;
+        }
+
         /// <inheritdoc/>
         public IGame Clone()
         {
-            var clone = new Game
+            var clone = new Game(Size)
             {
                 IsGameOver = IsGameOver,
                 Winner = Winner

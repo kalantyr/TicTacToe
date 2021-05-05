@@ -32,8 +32,8 @@ namespace TicTacToe.Core.Impl
 
             do
             {
-                var x = (byte)_rand.Next(0, 3);
-                var y = (byte)_rand.Next(0, 3);
+                var x = (byte)_rand.Next(0, game.Size);
+                var y = (byte)_rand.Next(0, game.Size);
                 if (game.CurrentState[x, y] == null)
                     return (x, y);
             } while (true);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using TicTacToe.Core;
 
 namespace TicTacToe
@@ -34,27 +33,33 @@ namespace TicTacToe
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ((App)Application.Current).NewGame();
+            ((App)Application.Current).NewGame(Game.DefaultSize);
         }
 
         private void OnGameChanged(IGame oldGame, IGame newGame)
         {
             if (oldGame != null)
             {
-                oldGame.End -= NewGame_End;
-                newGame.OnMove -= NewGame_OnMove;
+                oldGame.End -= Game_End;
+                newGame.OnMove -= Game_OnMove;
             }
 
             _gameControl.Game = newGame;
 
             if (newGame != null)
             {
-                newGame.End += NewGame_End;
-                newGame.OnMove += NewGame_OnMove;
+                if (newGame.Winner == null)
+                {
+                    _tbWinnerHuman.Visibility = Visibility.Hidden;
+                    _tbWinnerComputer.Visibility = Visibility.Hidden;
+                }
+
+                newGame.End += Game_End;
+                newGame.OnMove += Game_OnMove;
             }
         }
 
-        private void NewGame_OnMove(GameMove gameMove)
+        private void Game_OnMove(GameMove gameMove)
         {
             var game = ((App)Application.Current).CurrentGame;
             var winDetector = ((App)Application.Current).WinDetector;
@@ -63,14 +68,10 @@ namespace TicTacToe
             game.CheckWinner(winDetector);
         }
 
-        private void NewGame_End(Player? winner)
+        private void Game_End(Player? winner)
         {
-            var text = "Игра завершена.";
-            if (winner == Player.Computer)
-                text += Environment.NewLine + Environment.NewLine + "Победил компьютер.";
-            if (winner == Player.Human)
-                text += Environment.NewLine + Environment.NewLine + "Поздравляем, Вы победили!";
-            MessageBox.Show(this, text, Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            _tbWinnerHuman.Visibility = winner == Player.Human ? Visibility.Visible : Visibility.Hidden;
+            _tbWinnerComputer.Visibility = winner == Player.Computer ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)
@@ -80,7 +81,9 @@ namespace TicTacToe
 
         private void OnNewClick(object sender, RoutedEventArgs e)
         {
-            ((App)Application.Current).NewGame();
+            var tag = ((FrameworkElement) sender).Tag;
+            var size = byte.Parse((string)tag);
+            ((App)Application.Current).NewGame(size);
         }
     }
 }

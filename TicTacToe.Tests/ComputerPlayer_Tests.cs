@@ -1,5 +1,4 @@
-﻿using Moq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using TicTacToe.Core;
 using TicTacToe.Core.Impl;
 

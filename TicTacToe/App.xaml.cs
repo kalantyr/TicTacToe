@@ -37,10 +37,10 @@ namespace TicTacToe
         /// <summary>
         /// Начинает новую игру
         /// </summary>
-        internal void NewGame()
+        internal void NewGame(byte size)
         {
             var oldGame = CurrentGame;
-            CurrentGame = new Game();
+            CurrentGame = new Game(size);
             GameChanged?.Invoke(oldGame, CurrentGame);
         }
     }
