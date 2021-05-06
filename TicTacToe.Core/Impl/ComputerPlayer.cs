@@ -16,6 +16,7 @@ namespace TicTacToe.Core.Impl
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
             
+            // Поиск выигрышного последнего ходя для компьютера
             for (byte x=0; x<game.Size; x++)
             {
                 for (byte y=0; y<game.Size; y++)
@@ -29,6 +30,24 @@ namespace TicTacToe.Core.Impl
                         return (x, y);
                 }
             }
+
+             //Предотвращение выигрышного хода человека
+            for (byte x=0; x<game.Size; x++)
+            {
+                for (byte y=0; y<game.Size; y++)
+                {
+                    if (game.CurrentState[x, y] != null) continue;
+                    
+                    var clone = game.Clone();
+                    clone.MakeMove(Player.Human, x, y);
+                    clone.CheckWinner(_winDetector);
+                    if (clone.Winner == Player.Human)
+                        return (x, y);
+                }
+            }
+
+            if (game.CurrentState[1, 1] == null)
+                return (1, 1);
 
             do
             {

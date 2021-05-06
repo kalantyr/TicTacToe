@@ -98,6 +98,81 @@ namespace TicTacToe.Tests
             var (x, y) = computerPlayer.NextMove(game);
             Assert.AreEqual(0, x);
             Assert.AreEqual(2, y);
+        }    
+        
+        [Test]
+        public void GetLastMove_Test1()
+        {
+            var game = new Game();
+            game.MakeMove(Player.Human, 0, 0);
+            game.MakeMove(Player.Computer, 2, 0);
+            game.MakeMove(Player.Human, 1, 0);
+            game.MakeMove(Player.Computer, 2, 1);
+            game.MakeMove(Player.Human, 1, 1);
+
+            var computerPlayer = new ComputerPlayer(_winDetector);
+            var (x, y) = computerPlayer.NextMove(game);
+            Assert.AreEqual(2, x);
+            Assert.AreEqual(2, y);
+        }
+        
+        [Test]
+        public void GetLastMove_Test2()
+        {
+            var game = new Game();
+            game.MakeMove(Player.Human, 0, 0);
+            game.MakeMove(Player.Computer, 2, 0);
+            game.MakeMove(Player.Human, 0, 1);
+            game.MakeMove(Player.Computer, 1, 1);
+            game.MakeMove(Player.Human, 1, 0);
+
+            var computerPlayer = new ComputerPlayer(_winDetector);
+            var (x, y) = computerPlayer.NextMove(game);
+            Assert.AreEqual(0, x);
+            Assert.AreEqual(2, y);
+        }
+
+        [Test]
+        public void GetLastMove_Test3()
+        {
+            var game = new Game();
+            game.MakeMove(Player.Human, 2, 2);
+            game.MakeMove(Player.Computer, 2, 1);
+            game.MakeMove(Player.Human, 0, 2);
+            game.MakeMove(Player.Computer, 0, 1);
+            game.MakeMove(Player.Human, 1, 0);
+
+            var computerPlayer = new ComputerPlayer(_winDetector);
+            var (x, y) = computerPlayer.NextMove(game);
+            Assert.AreEqual(1, x);
+            Assert.AreEqual(1, y);
+        }
+
+        [Test]
+        public void GetLastMove_Test4()
+        {
+        var game = new Game();
+        game.MakeMove(Player.Human, 0, 0);
+        game.MakeMove(Player.Computer, 2, 2);
+        game.MakeMove(Player.Human, 0, 1);
+
+        var computerPlayer = new ComputerPlayer(_winDetector);
+        var (x, y) = computerPlayer.NextMove(game);
+        Assert.AreEqual(0, x);
+        Assert.AreEqual(2, y);
+        }
+        [Test]
+        public void GetLastMove_Test5()
+        {
+            var game = new Game();
+            game.MakeMove(Player.Human, 0, 0);
+            game.MakeMove(Player.Computer, 1, 2);
+            game.MakeMove(Player.Human, 1, 1);
+
+            var computerPlayer = new ComputerPlayer(_winDetector);
+            var (x, y) = computerPlayer.NextMove(game);
+            Assert.AreEqual(2, x);
+            Assert.AreEqual(2, y);
         }
     }
 }
