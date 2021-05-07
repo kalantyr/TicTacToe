@@ -85,5 +85,10 @@ namespace TicTacToe
             var size = byte.Parse((string)tag);
             ((App)Application.Current).NewGame(size);
         }
+
+        private void OnAboutClick(object sender, RoutedEventArgs e)
+        {
+            new AboutWindow { Owner = this }.ShowDialog();
+        }
     }
 }

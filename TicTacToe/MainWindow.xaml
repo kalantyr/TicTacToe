@@ -21,6 +21,9 @@
                     <MenuItem Header="7 x 7" Tag="7" Click="OnNewClick"/>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="О программе..." Click="OnAboutClick"/>
+            </MenuItem>
         </Menu>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">

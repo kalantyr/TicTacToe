@@ -1,0 +1,39 @@
+﻿<Window x:Class="TicTacToe.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="О программе" Height="250" Width="200" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="_tbTitle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style x:Key="_tbLink" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Крестики-нолики" Style="{StaticResource _tbTitle}"/>
+        <TextBlock Style="{StaticResource _tbLink}">
+            <Hyperlink NavigateUri="https://github.com/kalantyr/TicTacToe" Click="Hyperlink_OnClick">
+                github
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock Text="Разработчики:" Margin="0 25 0 0" Opacity="0.5"/>
+        <TextBlock Style="{StaticResource _tbLink}">
+            <Hyperlink NavigateUri="https://github.com/YuraKProgrammer" Click="Hyperlink_OnClick">
+                Юрий Калантырь
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock Style="{StaticResource _tbLink}">
+            <Hyperlink NavigateUri="https://github.com/kalantyr" Click="Hyperlink_OnClick">
+                Сергей Калантырь
+            </Hyperlink>
+        </TextBlock>
+    </StackPanel>
+</Window>
