@@ -1,8 +1,11 @@
-﻿namespace TicTacToe.Core
+﻿using System.Diagnostics;
+
+namespace TicTacToe.Core
 {
     /// <summary>
     /// Ход в игре
     /// </summary>
+    [DebuggerDisplay("{Player} ({X}, {Y})")]
     public class GameMove
     {
         /// <summary>

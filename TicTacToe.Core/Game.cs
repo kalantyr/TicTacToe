@@ -39,6 +39,9 @@ namespace TicTacToe.Core
         /// <inheritdoc/>
         public Player? Winner { get; private set; }
 
+        /// <inheritdoc/>
+        public IReadOnlyCollection<GameMove> Moves => _gameMoves;
+
         public Game(byte size = DefaultSize)
         {
             Size = size;
