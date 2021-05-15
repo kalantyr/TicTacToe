@@ -5,17 +5,19 @@ namespace TicTacToe.Core.Impl
     public class ComputerPlayer: IPlayer
     {
         private readonly IWinDetector _winDetector;
+        private readonly IScenarioCalculator _scenarioCalculator;
         private readonly Random _rand = new Random();
 
-        public ComputerPlayer(IWinDetector winDetector)
+        public ComputerPlayer(IWinDetector winDetector, IScenarioCalculator scenarioCalculator)
         {
             _winDetector = winDetector ?? throw new ArgumentNullException(nameof(winDetector));
+            _scenarioCalculator = scenarioCalculator ?? throw new ArgumentNullException(nameof(scenarioCalculator));
         }
 
         public (byte, byte) NextMove(IGame game)
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
-            
+
             // Поиск выигрышного последнего ходя для компьютера
             for (byte x=0; x<game.Size; x++)
             {
@@ -46,6 +48,7 @@ namespace TicTacToe.Core.Impl
                 }
             }
 
+            // TODO: это годится, только если размер = 3х3
             if (game.CurrentState[1, 1] == null)
                 return (1, 1);
 

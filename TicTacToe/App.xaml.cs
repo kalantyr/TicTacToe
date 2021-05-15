@@ -11,7 +11,7 @@ namespace TicTacToe
 
         public App()
         {
-            _computerPlayer = new ComputerPlayer(_winDetector);
+            _computerPlayer = new ComputerPlayer(_winDetector, new ScenarioCalculator(_winDetector));
         }
 
         /// <summary>
