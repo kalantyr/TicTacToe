@@ -19,7 +19,27 @@ namespace TicTacToe.Core.Impl
 
             var scenarios = new List<Scenario>();
 
-            // TODO: тут нужно перебрать разные сценарии и добавить их в список "scenarios"
+            for (byte x = 0; x < game.Size; x++)
+            {
+                for (byte y = 0; y < game.Size; y++)
+                {
+                    if (game.CurrentState[x, y] != null) continue;
+
+                    var clone = game.Clone();
+                    clone.MakeMove(Player.Computer, x, y);
+                    clone.CheckWinner(_winDetector);
+                    if (clone.Winner == Player.Computer)
+                    {
+                        var moves = new[] { new GameMove(Player.Computer, x, y, State.Zero) };
+                        scenarios.Add(new Scenario(moves, Player.Computer));
+                    }
+                    //if (clone.Winner == Player.Human)
+                    //{
+                    //    var moves = new[] { new GameMove(Player.Human, x, y, State.Cross) };
+                    //    scenarios.Add(new Scenario(moves, Player.Human));
+                    //}
+                }
+            }
 
             return scenarios;
         }

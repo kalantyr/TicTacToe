@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace TicTacToe.Core.Impl
 {
@@ -17,21 +18,29 @@ namespace TicTacToe.Core.Impl
         public (byte, byte) NextMove(IGame game)
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
-
-            // Поиск выигрышного последнего ходя для компьютера
-            for (byte x=0; x<game.Size; x++)
+           
+            var scenarios = _scenarioCalculator.Generate(game);
+            if (scenarios.Any())
             {
-                for (byte y=0; y<game.Size; y++)
-                {
-                    if (game.CurrentState[x, y] != null) continue;
-                    
-                    var clone = game.Clone();
-                    clone.MakeMove(Player.Computer, x, y);
-                    clone.CheckWinner(_winDetector);
-                    if (clone.Winner == Player.Computer)
-                        return (x, y);
-                }
+                var best = scenarios.OrderBy(s => s.Evaluation).Last();
+                var first = best.GameMoves.First();
+                return (first.X,first.Y);
             }
+
+            //// Поиск выигрышного последнего ходя для компьютера
+            //for (byte x=0; x<game.Size; x++)
+            //{
+            //    for (byte y=0; y<game.Size; y++)
+            //    {
+            //        if (game.CurrentState[x, y] != null) continue;
+                    
+            //        var clone = game.Clone();
+            //        clone.MakeMove(Player.Computer, x, y);
+            //        clone.CheckWinner(_winDetector);
+            //        if (clone.Winner == Player.Computer)
+            //            return (x, y);
+            //    }
+            //}
 
              //Предотвращение выигрышного хода человека
             for (byte x=0; x<game.Size; x++)

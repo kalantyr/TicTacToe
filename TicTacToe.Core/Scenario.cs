@@ -12,6 +12,8 @@ namespace TicTacToe.Core
         /// Последовательность ходов
         /// </summary>
         public IReadOnlyCollection<GameMove> GameMoves { get; }
+        
+        public Player? Winner { get; }
 
         /// <summary>
         /// Определяет оценку сценария.
@@ -23,14 +25,19 @@ namespace TicTacToe.Core
         {
             get
             {
-                // TODO: тут надо вычислять оценку
-                throw new NotImplementedException();
+                if (Winner == Player.Human)
+                    return -1;
+                if (Winner == Player.Computer)
+                    return 1;
+                return 0;
+
             }
         }
 
-        public Scenario(IReadOnlyCollection<GameMove> gameMoves)
+        public Scenario(IReadOnlyCollection<GameMove> gameMoves, Player? winner)
         {
             GameMoves = gameMoves ?? throw new ArgumentNullException(nameof(gameMoves));
+            Winner = winner;
         }
     }
 }
