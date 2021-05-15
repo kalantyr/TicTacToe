@@ -23,7 +23,7 @@ namespace TicTacToe.Core.Impl
             if (scenarios.Any())
             {
                 var best = scenarios.OrderBy(s => s.Evaluation).Last();
-                var first = best.GameMoves.First();
+                var first = best.Moves.First();
                 return (first.X,first.Y);
             }
 
