@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace TicTacToe.Core.Impl
 {
@@ -18,28 +19,13 @@ namespace TicTacToe.Core.Impl
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
 
-            // Поиск выигрышного последнего ходя для компьютера
-            for (byte x=0; x<game.Size; x++)
+            //Предотвращение выигрышного хода человека
+            for (byte x = 0; x < game.Size; x++)
             {
-                for (byte y=0; y<game.Size; y++)
+                for (byte y = 0; y < game.Size; y++)
                 {
                     if (game.CurrentState[x, y] != null) continue;
-                    
-                    var clone = game.Clone();
-                    clone.MakeMove(Player.Computer, x, y);
-                    clone.CheckWinner(_winDetector);
-                    if (clone.Winner == Player.Computer)
-                        return (x, y);
-                }
-            }
 
-             //Предотвращение выигрышного хода человека
-            for (byte x=0; x<game.Size; x++)
-            {
-                for (byte y=0; y<game.Size; y++)
-                {
-                    if (game.CurrentState[x, y] != null) continue;
-                    
                     var clone = game.Clone();
                     clone.MakeMove(Player.Human, x, y);
                     clone.CheckWinner(_winDetector);
@@ -48,9 +34,34 @@ namespace TicTacToe.Core.Impl
                 }
             }
 
-            // TODO: это годится, только если размер = 3х3
-            if (game.CurrentState[1, 1] == null)
-                return (1, 1);
+            var scenarios = _scenarioCalculator.Generate(game);
+            if (scenarios.Any())
+            {
+                var best = scenarios.OrderBy(s => s.Evaluation).Last();
+                var move = best.Moves.Skip(game.Moves.Count).First();
+                return (move.X,move.Y);
+            }
+
+            //// Поиск выигрышного последнего ходя для компьютера
+            //for (byte x=0; x<game.Size; x++)
+            //{
+            //    for (byte y=0; y<game.Size; y++)
+            //    {
+            //        if (game.CurrentState[x, y] != null) continue;
+                    
+            //        var clone = game.Clone();
+            //        clone.MakeMove(Player.Computer, x, y);
+            //        clone.CheckWinner(_winDetector);
+            //        if (clone.Winner == Player.Computer)
+            //            return (x, y);
+            //    }
+            //}
+
+
+
+            if (game.Size==3)
+                if (game.CurrentState[1, 1] == null)
+                    return (1, 1);
 
             do
             {

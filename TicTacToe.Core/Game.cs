@@ -11,16 +11,17 @@ namespace TicTacToe.Core
         public const byte DefaultSize = 3;
 
         private readonly List<GameMove> _gameMoves = new List<GameMove>();
+        private State?[,] _currentState;
 
         /// <inheritdoc/>
         public State?[,] CurrentState
         {
             get
             {
-                var currentState = new State?[Size, Size];
-                foreach (var move in _gameMoves)
-                    currentState[move.X, move.Y] = move.State;
-                return currentState;
+                //var currentState = new State?[Size, Size];
+                //foreach (var move in _gameMoves)
+                //    currentState[move.X, move.Y] = move.State;
+                return _currentState;
             }
         }
 
@@ -39,6 +40,9 @@ namespace TicTacToe.Core
         /// <inheritdoc/>
         public Player? Winner { get; private set; }
 
+        /// <inheritdoc/>
+        public IReadOnlyCollection<GameMove> Moves => _gameMoves;
+
         public Game(byte size = DefaultSize)
         {
             Size = size;
@@ -53,6 +57,12 @@ namespace TicTacToe.Core
                 Winner = Winner
             };
             clone._gameMoves.AddRange(_gameMoves);
+            
+            clone._currentState = new State?[Size, Size];
+            for (var y = 0; y < Size; y++)
+            for (var x = 0; x < Size; x++)
+                clone._currentState[x, y] = _currentState[x, y];
+
             return clone;
         }
 
@@ -67,6 +77,9 @@ namespace TicTacToe.Core
             if (IsGameOver)
                 return;
 
+            if (_currentState == null)
+                _currentState = new State?[Size, Size];
+
             if (CurrentState[x, y] != null)
                 throw new Exception($"Поле ({x}, {y}) уже занято");
 
@@ -75,6 +88,9 @@ namespace TicTacToe.Core
                 : State.Zero;
             var gameMove = new GameMove(player, x, y, state);
             _gameMoves.Add(gameMove);
+
+            _currentState[x, y] = state;
+
             OnMove?.Invoke(gameMove);
         }
 

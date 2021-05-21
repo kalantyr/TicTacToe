@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace TicTacToe.Core
 {
     /// <summary>
     /// Сценарий дальнейшего развития игры
     /// </summary>
+    [DebuggerDisplay("{Winner} оценка={Evaluation}")]
     public class Scenario
     {
         /// <summary>
         /// Последовательность ходов
         /// </summary>
-        public IReadOnlyCollection<GameMove> GameMoves { get; }
+        public IReadOnlyCollection<GameMove> Moves { get; }
+        
+        public Player? Winner { get; }
 
         /// <summary>
         /// Определяет оценку сценария.
@@ -23,14 +27,19 @@ namespace TicTacToe.Core
         {
             get
             {
-                // TODO: тут надо вычислять оценку
-                throw new NotImplementedException();
+                if (Winner == Player.Human)
+                    return (float)(-1)/Moves.Count;
+                if (Winner == Player.Computer)
+                    return (float)1/Moves.Count;
+                return 0;
+
             }
         }
 
-        public Scenario(IReadOnlyCollection<GameMove> gameMoves)
+        public Scenario(IReadOnlyCollection<GameMove> gameMoves, Player? winner)
         {
-            GameMoves = gameMoves ?? throw new ArgumentNullException(nameof(gameMoves));
+            Moves = gameMoves ?? throw new ArgumentNullException(nameof(gameMoves));
+            Winner = winner;
         }
     }
 }

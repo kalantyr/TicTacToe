@@ -17,8 +17,8 @@
                     <MenuItem Header="3 x 3" Tag="3" Click="OnNewClick"/>
                     <MenuItem Header="4 x 4" Tag="4" Click="OnNewClick"/>
                     <MenuItem Header="5 x 5" Tag="5" Click="OnNewClick"/>
-                    <MenuItem Header="6 x 6" Tag="6" Click="OnNewClick"/>
-                    <MenuItem Header="7 x 7" Tag="7" Click="OnNewClick"/>
+                    <MenuItem Header="6 x 6" Tag="6" Click="OnNewClick" Visibility="Collapsed"/>
+                    <MenuItem Header="7 x 7" Tag="7" Click="OnNewClick" Visibility="Collapsed"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Помощь">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TicTacToe.Core
 {
@@ -13,6 +14,11 @@ namespace TicTacToe.Core
         /// Победитель
         /// </summary>
         Player? Winner { get; }
+
+        /// <summary>
+        /// Список всех ходов
+        /// </summary>
+        IReadOnlyCollection<GameMove> Moves { get; }
 
         /// <summary>
         /// Создаёт отдельную копию игры (без подписчиков)
