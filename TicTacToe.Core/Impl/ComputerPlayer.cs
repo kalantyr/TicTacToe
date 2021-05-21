@@ -42,24 +42,7 @@ namespace TicTacToe.Core.Impl
                 return (move.X,move.Y);
             }
 
-            //// Поиск выигрышного последнего ходя для компьютера
-            //for (byte x=0; x<game.Size; x++)
-            //{
-            //    for (byte y=0; y<game.Size; y++)
-            //    {
-            //        if (game.CurrentState[x, y] != null) continue;
-                    
-            //        var clone = game.Clone();
-            //        clone.MakeMove(Player.Computer, x, y);
-            //        clone.CheckWinner(_winDetector);
-            //        if (clone.Winner == Player.Computer)
-            //            return (x, y);
-            //    }
-            //}
-
-
-
-            if (game.Size==3)
+            if (game.Size == 3)
                 if (game.CurrentState[1, 1] == null)
                     return (1, 1);
 
