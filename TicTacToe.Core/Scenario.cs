@@ -28,9 +28,9 @@ namespace TicTacToe.Core
             get
             {
                 if (Winner == Player.Human)
-                    return -1;
+                    return (float)(-1)/Moves.Count;
                 if (Winner == Player.Computer)
-                    return 1;
+                    return (float)1/Moves.Count;
                 return 0;
 
             }
