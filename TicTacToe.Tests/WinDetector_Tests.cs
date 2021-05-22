@@ -184,5 +184,96 @@ namespace TicTacToe.Tests
             var result = winDetector.GetWinner(game.Object);
             Assert.AreEqual(null, result);
         }
+
+        [Test]
+        public void GetWinner_Test_AI1()
+        {
+            var state = new State?[5, 5];
+            state[1, 1] = State.Cross;
+            state[2, 2] = State.Cross;
+            state[3, 3] = State.Cross;
+
+
+            var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(5);
+            game.Setup(g => g.CurrentState).Returns(state);
+
+            var winDetector = new WinDetector();
+            var result = winDetector.GetWinner(game.Object);
+            Assert.AreEqual(Player.Human, result);
+        }
+
+        [Test]
+        public void GetWinner_Test_AI2()
+        {
+            var state = new State?[5, 5];
+            state[0, 4] = State.Cross;
+            state[1, 3] = State.Cross;
+            state[2, 2] = null;
+            state[3, 1] = State.Cross;
+            state[4, 0] = State.Cross;
+
+            var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(5);
+            game.Setup(g => g.CurrentState).Returns(state);
+
+            var winDetector = new WinDetector();
+            var result = winDetector.GetWinner(game.Object);
+            Assert.AreEqual(null, result);
+        }
+
+        [Test]
+        public void GetWinner_Test_AI3()
+        {
+            var state = new State?[5, 5];
+            state[0, 2] = State.Cross;
+            state[1, 3] = State.Cross;
+            state[2, 4] = State.Cross;
+
+            var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(5);
+            game.Setup(g => g.CurrentState).Returns(state);
+
+            var winDetector = new WinDetector();
+            var result = winDetector.GetWinner(game.Object);
+            Assert.AreEqual(Player.Human, result);
+        }
+
+        [Test]
+        public void GetWinner_Test_AI4()
+        {
+            var state = new State?[4, 4];
+            state[1, 3] = State.Cross;
+            state[2, 2] = State.Cross;
+            state[3, 1] = State.Cross;
+
+            var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(4);
+            game.Setup(g => g.CurrentState).Returns(state);
+
+            var winDetector = new WinDetector();
+            var result = winDetector.GetWinner(game.Object);
+            Assert.AreEqual(Player.Human, result);
+        }
+
+        [Test]
+        public void GetWinner_Test_AI_Bug()
+        {
+            var state = new State?[5, 5];
+            state[3, 0] = State.Cross;
+            state[3, 1] = State.Cross;
+            state[1, 4] = State.Cross;
+            state[4, 1] = State.Zero;
+            state[3, 2] = State.Zero;
+            state[0, 4] = State.Zero;
+
+            var game = new Mock<IGameInfo>();
+            game.Setup(g => g.Size).Returns(5);
+            game.Setup(g => g.CurrentState).Returns(state);
+
+            var winDetector = new WinDetector();
+            var result = winDetector.GetWinner(game.Object);
+            Assert.AreEqual(null, result);
+        }
     }
 }

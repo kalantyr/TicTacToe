@@ -19,6 +19,14 @@ namespace TicTacToe.Core.Impl
         {
             if (game == null) throw new ArgumentNullException(nameof(game));
 
+            var scenarios = _scenarioCalculator.Generate(game);
+            if (scenarios.Any())
+            {
+                var best = scenarios.OrderBy(s => s.Evaluation).Last();
+                var move = best.Moves.Skip(game.Moves.Count).First();
+                return (move.X,move.Y);
+            }
+
             //Предотвращение выигрышного хода человека
             for (byte x = 0; x < game.Size; x++)
             {
@@ -32,14 +40,6 @@ namespace TicTacToe.Core.Impl
                     if (clone.Winner == Player.Human)
                         return (x, y);
                 }
-            }
-
-            var scenarios = _scenarioCalculator.Generate(game);
-            if (scenarios.Any())
-            {
-                var best = scenarios.OrderBy(s => s.Evaluation).Last();
-                var move = best.Moves.Skip(game.Moves.Count).First();
-                return (move.X,move.Y);
             }
 
             if (game.Size == 3)
